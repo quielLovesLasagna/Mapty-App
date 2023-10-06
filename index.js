@@ -307,11 +307,19 @@ class App {
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem("workouts"));
 
-    data.forEach((el) => el.__proto__ === Workout.prototype);
-
     if (!data) return;
 
     this.#workouts = data;
+
+    this.#workouts.forEach((workout) => {
+      if (workout.type === "running") {
+        workout.__proto__ = Object.create(Running.prototype);
+      }
+
+      if (workout.type === "cycling") {
+        workout.__proto__ = Object.create(Cycling.prototype);
+      }
+    });
 
     this.#workouts.forEach((workout) => {
       this._renderWorkout(workout);
