@@ -307,6 +307,8 @@ class App {
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem("workouts"));
 
+    data.forEach((el) => el.__proto__ === Workout.prototype);
+
     if (!data) return;
 
     this.#workouts = data;
